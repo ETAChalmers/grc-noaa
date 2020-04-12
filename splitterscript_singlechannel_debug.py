@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sun Apr 12 12:12:28 2020
+# Generated: Sun Apr 12 12:55:36 2020
 ##################################################
 
 
@@ -52,7 +52,7 @@ class top_block(gr.top_block):
         self.osmosdr_source_0.set_antenna('', 0)
         self.osmosdr_source_0.set_bandwidth(0, 0)
 
-        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.214', 1230, 1472, True)
+        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1230, 1472, True)
 
         ##################################################
         # Connections
