@@ -18,6 +18,8 @@ rm -rf save_pid.txt
 if [ -f noaa-apt/noaa-apt ]; then
 	echo "noaa-apt exists"
 else
+	mkdir audio
+	mkdir img
 	mkdir noaa-apt
 	cd noaa-apt/
 	wget https://github.com/martinber/noaa-apt/releases/download/v1.2.0/noaa-apt-1.2.0-x86_64-linux-gnu-nogui.zip
@@ -35,7 +37,7 @@ nc -l -u 7355 | aplay -r 11025 -f S16_LE -t raw -c 1 -D hw:Loopback,0,1 &
 echo $! >> save_pid.txt
 
 #record the loopback via ffmpeg 
-ffmpeg -ar 11025 -f alsa -ac 1 -i hw:Loopback,1,1 -vn -f segment -segment_time 20 -strftime 1  "audio/recording-%Y-%m-%d_%H-%M-%S.wav" &
+ffmpeg -ar 11025 -f alsa -ac 1 -i hw:Loopback,1,1 -vn -f segment -segment_time 35 -strftime 1  "audio/recording-%Y-%m-%d_%H-%M-%S.wav" &
 echo $! >> save_pid.txt
 
 #start gnuradio script
@@ -51,12 +53,12 @@ inotifywait -m -q -e create -r --format "%:e %w%f" audio/ | while read file
 do
 cdate=$(date +"%Y-%m-%d-%H:%M")
 echo $cdate
-
+sleep 1
 unset -v latest
 for file in audio/*; do
   [[ $file -nt $latest ]] && latest=$file
 done
 echo $latest
 ./noaa-apt/noaa-apt $latest -o img/$cdate.png
-rm -rf $latest
+#rm -rf $latest
 done

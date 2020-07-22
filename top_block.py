@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: udp-recive
-# Generated: Wed Jul 22 11:23:11 2020
+# Generated: Wed Jul 22 15:59:31 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -136,11 +136,10 @@ class top_block(gr.top_block, Qt.QWidget):
         self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_number_sink_0_win)
         self.probe_channel = blocks.probe_signal_s()
-        self.blocks_wavfile_sink_0 = blocks.wavfile_sink('/home/david/Music/foobar', 1, 11025, 16)
         self.blocks_udp_source_0_2 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1232, 1472, True)
         self.blocks_udp_source_0_1 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1230, 1472, True)
         self.blocks_udp_source_0 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1231, 1472, True)
-        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_float*1, 'localhost', 7355, 1316, True)
+        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_float*1, 'localhost', 7355, 1225, True)
         self.blocks_streams_to_vector_0 = blocks.streams_to_vector(gr.sizeof_float*1, 3)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_short*1)
         self.blocks_moving_average_2_0 = blocks.moving_average_ff(4000, 1, 4000)
@@ -244,7 +243,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_udp_source_0_2, 0), (self.blks2_selector_0, 2))
         self.connect((self.blocks_udp_source_0_2, 0), (self.blocks_complex_to_mag_squared_0_1, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_udp_sink_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_wavfile_sink_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "top_block")
