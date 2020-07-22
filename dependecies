@@ -1,0 +1,7 @@
+#dependencies
+inotify-tools
+gnuradio-companion
+alsaplayer-alsa
+ffmpeg
+libgcc
+glibc
