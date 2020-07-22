@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: udp-recive
-# Generated: Tue Jul 21 17:11:54 2020
+# Generated: Wed Jul 22 11:23:11 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -104,37 +104,6 @@ class top_block(gr.top_block, Qt.QWidget):
                 taps=None,
                 fractional_bw=None,
         )
-        self.qtgui_time_raster_sink_x_0 = qtgui.time_raster_sink_f(
-        	11025,
-        	1024,
-        	1024,
-        	([]),
-        	([]),
-        	"",
-        	1,
-        	)
-
-        self.qtgui_time_raster_sink_x_0.set_update_time(0.10)
-        self.qtgui_time_raster_sink_x_0.set_intensity_range(-1, 1)
-        self.qtgui_time_raster_sink_x_0.enable_grid(False)
-        self.qtgui_time_raster_sink_x_0.enable_axis_labels(True)
-
-        labels = ['', '', '', '', '',
-                  '', '', '', '', '']
-        colors = [0, 0, 0, 0, 0,
-                  0, 0, 0, 0, 0]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-                  1.0, 1.0, 1.0, 1.0, 1.0]
-        for i in xrange(1):
-            if len(labels[i]) == 0:
-                self.qtgui_time_raster_sink_x_0.set_line_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_time_raster_sink_x_0.set_line_label(i, labels[i])
-            self.qtgui_time_raster_sink_x_0.set_color_map(i, colors[i])
-            self.qtgui_time_raster_sink_x_0.set_line_alpha(i, alphas[i])
-
-        self._qtgui_time_raster_sink_x_0_win = sip.wrapinstance(self.qtgui_time_raster_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_time_raster_sink_x_0_win)
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_short,
             0,
@@ -171,6 +140,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_udp_source_0_2 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1232, 1472, True)
         self.blocks_udp_source_0_1 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1230, 1472, True)
         self.blocks_udp_source_0 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1231, 1472, True)
+        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_float*1, 'localhost', 7355, 1316, True)
         self.blocks_streams_to_vector_0 = blocks.streams_to_vector(gr.sizeof_float*1, 3)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_short*1)
         self.blocks_moving_average_2_0 = blocks.moving_average_ff(4000, 1, 4000)
@@ -273,8 +243,8 @@ class top_block(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_udp_source_0_2, 0), (self.NOAA15_fall, 0))
         self.connect((self.blocks_udp_source_0_2, 0), (self.blks2_selector_0, 2))
         self.connect((self.blocks_udp_source_0_2, 0), (self.blocks_complex_to_mag_squared_0_1, 0))
+        self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_udp_sink_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_wavfile_sink_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.qtgui_time_raster_sink_x_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "top_block")
