@@ -86,122 +86,29 @@ class top_block(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self.rational_resampler_xxx_1_0_0 = filter.rational_resampler_ccf(
-                interpolation=1,
-                decimation=5,
-                taps=None,
-                fractional_bw=None)
-        self.rational_resampler_xxx_1_0 = filter.rational_resampler_ccf(
-                interpolation=1,
-                decimation=5,
-                taps=None,
-                fractional_bw=None)
-        self.rational_resampler_xxx_1 = filter.rational_resampler_ccf(
-                interpolation=1,
-                decimation=5,
-                taps=None,
-                fractional_bw=None)
         self.rational_resampler_xxx_0 = filter.rational_resampler_fff(
                 interpolation=11025,
                 decimation=34000,
                 taps=None,
                 fractional_bw=None)
-        self.qtgui_number_sink_0_0_0_0 = qtgui.number_sink(
-            gr.sizeof_float,
-            0,
-            qtgui.NUM_GRAPH_NONE,
-            1
+        self.qtgui_sink_x_0 = qtgui.sink_c(
+            2048, #fftsize
+            firdes.WIN_HAMMING, #wintype
+            0, #fc
+            34e3, #bw
+            "output sink", #name
+            True, #plotfreq
+            True, #plotwaterfall
+            False, #plottime
+            False #plotconst
         )
-        self.qtgui_number_sink_0_0_0_0.set_update_time(0.1)
-        self.qtgui_number_sink_0_0_0_0.set_title('channel2')
+        self.qtgui_sink_x_0.set_update_time(1.0/10)
+        self._qtgui_sink_x_0_win = sip.wrapinstance(self.qtgui_sink_x_0.pyqwidget(), Qt.QWidget)
 
-        labels = ['', '', '', '', '',
-            '', '', '', '', '']
-        units = ['', '', '', '', '',
-            '', '', '', '', '']
-        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
-            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
-        factor = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
+        self.qtgui_sink_x_0.enable_rf_freq(False)
 
-        for i in range(1):
-            self.qtgui_number_sink_0_0_0_0.set_min(i, 0)
-            self.qtgui_number_sink_0_0_0_0.set_max(i, 2)
-            self.qtgui_number_sink_0_0_0_0.set_color(i, colors[i][0], colors[i][1])
-            if len(labels[i]) == 0:
-                self.qtgui_number_sink_0_0_0_0.set_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_number_sink_0_0_0_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0_0_0_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0_0_0_0.set_factor(i, factor[i])
-
-        self.qtgui_number_sink_0_0_0_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_0_0_0_win = sip.wrapinstance(self.qtgui_number_sink_0_0_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_0_0_0_win)
-        self.qtgui_number_sink_0_0_0 = qtgui.number_sink(
-            gr.sizeof_float,
-            0,
-            qtgui.NUM_GRAPH_NONE,
-            1
-        )
-        self.qtgui_number_sink_0_0_0.set_update_time(0.1)
-        self.qtgui_number_sink_0_0_0.set_title("channel1")
-
-        labels = ['', '', '', '', '',
-            '', '', '', '', '']
-        units = ['', '', '', '', '',
-            '', '', '', '', '']
-        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
-            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
-        factor = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-
-        for i in range(1):
-            self.qtgui_number_sink_0_0_0.set_min(i, 0)
-            self.qtgui_number_sink_0_0_0.set_max(i, 2)
-            self.qtgui_number_sink_0_0_0.set_color(i, colors[i][0], colors[i][1])
-            if len(labels[i]) == 0:
-                self.qtgui_number_sink_0_0_0.set_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_number_sink_0_0_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0_0_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0_0_0.set_factor(i, factor[i])
-
-        self.qtgui_number_sink_0_0_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_0_0_win = sip.wrapinstance(self.qtgui_number_sink_0_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_0_0_win)
-        self.qtgui_number_sink_0_0 = qtgui.number_sink(
-            gr.sizeof_float,
-            0,
-            qtgui.NUM_GRAPH_NONE,
-            1
-        )
-        self.qtgui_number_sink_0_0.set_update_time(0.1)
-        self.qtgui_number_sink_0_0.set_title("channel0")
-
-        labels = ['', '', '', '', '',
-            '', '', '', '', '']
-        units = ['', '', '', '', '',
-            '', '', '', '', '']
-        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
-            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
-        factor = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-
-        for i in range(1):
-            self.qtgui_number_sink_0_0.set_min(i, 0)
-            self.qtgui_number_sink_0_0.set_max(i, 2)
-            self.qtgui_number_sink_0_0.set_color(i, colors[i][0], colors[i][1])
-            if len(labels[i]) == 0:
-                self.qtgui_number_sink_0_0.set_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_number_sink_0_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0_0.set_factor(i, factor[i])
-
-        self.qtgui_number_sink_0_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_0_win = sip.wrapinstance(self.qtgui_number_sink_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_0_win)
+        self.top_grid_layout.addWidget(self._qtgui_sink_x_0_win)
+        self.qtgui_sink_x_0.set_block_alias("output sink")
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_short,
             0,
@@ -234,24 +141,18 @@ class top_block(gr.top_block, Qt.QWidget):
         self.qtgui_number_sink_0.enable_autoscale(False)
         self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win)
-        self.blocks_wavfile_sink_0 = blocks.wavfile_sink('/home/david/Music/foobar', 1, 11025, 16)
-        self.blocks_udp_source_0_2 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1232, 3000, True)
-        self.blocks_udp_source_0_2.set_max_output_buffer(1472)
-        self.blocks_udp_source_0_1 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1230, 3000, True)
-        self.blocks_udp_source_0_1.set_max_output_buffer(1472)
-        self.blocks_udp_source_0 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1231, 3000, True)
-        self.blocks_udp_source_0.set_max_output_buffer(1472)
-        self.blocks_threshold_ff_0_2_0_0 = blocks.threshold_ff(0.5, 1.5, 0)
-        self.blocks_threshold_ff_0_2_0 = blocks.threshold_ff(0.5, 1.5, 0)
-        self.blocks_threshold_ff_0_2 = blocks.threshold_ff(0.5, 1.5, 0)
+        self.blocks_udp_source_0_2 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1232, 4000, True)
+        self.blocks_udp_source_0_1 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1230, 4000, True)
+        self.blocks_udp_source_0 = blocks.udp_source(gr.sizeof_gr_complex*1, '0.0.0.0', 1231, 4000, True)
+        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_float*1, 'localhost', 7355, 1225, True)
         self.blocks_threshold_ff_0_1 = blocks.threshold_ff(1.5, 2.5, 0)
         self.blocks_threshold_ff_0_0 = blocks.threshold_ff(0.5, 1.5, 0)
         self.blocks_threshold_ff_0 = blocks.threshold_ff(-0.5, 0.5, 0)
         self.blocks_streams_to_vector_0 = blocks.streams_to_vector(gr.sizeof_float*1, 3)
         self.blocks_short_to_float_0 = blocks.short_to_float(1, 1)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_short*1)
-        self.blocks_multiply_xx_0_0_0 = blocks.multiply_vcc(1)
-        self.blocks_multiply_xx_0_0 = blocks.multiply_vcc(1)
+        self.blocks_multiply_xx_2 = blocks.multiply_vcc(1)
+        self.blocks_multiply_xx_1 = blocks.multiply_vcc(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_moving_average_2_0 = blocks.moving_average_ff(4000, 1, 4000, 1)
         self.blocks_moving_average_2 = blocks.moving_average_ff(4000, 1, 4000, 1)
@@ -264,6 +165,12 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(1)
         self.blocks_argmax_xx_0 = blocks.argmax_fs(3)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
+        self.blocks_add_const_vxx_0_0_0 = blocks.add_const_ff(-1)
+        self.blocks_add_const_vxx_0_0 = blocks.add_const_ff(-1)
+        self.blocks_add_const_vxx_0 = blocks.add_const_ff(-1)
+        self.blocks_abs_xx_0_0_0 = blocks.abs_ff(1)
+        self.blocks_abs_xx_0_0 = blocks.abs_ff(1)
+        self.blocks_abs_xx_0 = blocks.abs_ff(1)
         self.analog_wfm_rcv_0 = analog.wfm_rcv(
         	quad_rate=bandwidth,
         	audio_decimation=1,
@@ -279,7 +186,7 @@ class top_block(gr.top_block, Qt.QWidget):
             False, #plottime
             False #plotconst
         )
-        self.NOAA19_fall.set_update_time(1.0/10)
+        self.NOAA19_fall.set_update_time(1.0/1)
         self._NOAA19_fall_win = sip.wrapinstance(self.NOAA19_fall.pyqwidget(), Qt.QWidget)
 
         self.NOAA19_fall.enable_rf_freq(True)
@@ -296,7 +203,7 @@ class top_block(gr.top_block, Qt.QWidget):
             False, #plottime
             False #plotconst
         )
-        self.NOAA18_fall.set_update_time(1.0/10)
+        self.NOAA18_fall.set_update_time(1.0/1)
         self._NOAA18_fall_win = sip.wrapinstance(self.NOAA18_fall.pyqwidget(), Qt.QWidget)
 
         self.NOAA18_fall.enable_rf_freq(True)
@@ -313,7 +220,7 @@ class top_block(gr.top_block, Qt.QWidget):
             False, #plottime
             False #plotconst
         )
-        self.NOAA15_fall.set_update_time(1.0/10)
+        self.NOAA15_fall.set_update_time(1.0/1)
         self._NOAA15_fall_win = sip.wrapinstance(self.NOAA15_fall.pyqwidget(), Qt.QWidget)
 
         self.NOAA15_fall.enable_rf_freq(True)
@@ -326,7 +233,14 @@ class top_block(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.analog_wfm_rcv_0, 0), (self.rational_resampler_xxx_0, 0))
+        self.connect((self.blocks_abs_xx_0, 0), (self.blocks_float_to_complex_1, 0))
+        self.connect((self.blocks_abs_xx_0_0, 0), (self.blocks_float_to_complex_1_0, 0))
+        self.connect((self.blocks_abs_xx_0_0_0, 0), (self.blocks_float_to_complex_1_1, 0))
+        self.connect((self.blocks_add_const_vxx_0, 0), (self.blocks_abs_xx_0, 0))
+        self.connect((self.blocks_add_const_vxx_0_0, 0), (self.blocks_abs_xx_0_0, 0))
+        self.connect((self.blocks_add_const_vxx_0_0_0, 0), (self.blocks_abs_xx_0_0_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.analog_wfm_rcv_0, 0))
+        self.connect((self.blocks_add_xx_0, 0), (self.qtgui_sink_x_0, 0))
         self.connect((self.blocks_argmax_xx_0, 1), (self.blocks_null_sink_0, 0))
         self.connect((self.blocks_argmax_xx_0, 0), (self.blocks_short_to_float_0, 0))
         self.connect((self.blocks_argmax_xx_0, 0), (self.qtgui_number_sink_0, 0))
@@ -334,40 +248,31 @@ class top_block(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_complex_to_mag_squared_0_0, 0), (self.blocks_moving_average_2, 0))
         self.connect((self.blocks_complex_to_mag_squared_0_1, 0), (self.blocks_moving_average_2_0, 0))
         self.connect((self.blocks_float_to_complex_1, 0), (self.blocks_multiply_xx_0, 1))
-        self.connect((self.blocks_float_to_complex_1_0, 0), (self.blocks_multiply_xx_0_0, 1))
-        self.connect((self.blocks_float_to_complex_1_1, 0), (self.blocks_multiply_xx_0_0_0, 1))
+        self.connect((self.blocks_float_to_complex_1_0, 0), (self.blocks_multiply_xx_1, 1))
+        self.connect((self.blocks_float_to_complex_1_1, 0), (self.blocks_multiply_xx_2, 1))
         self.connect((self.blocks_moving_average_1, 0), (self.blocks_streams_to_vector_0, 0))
         self.connect((self.blocks_moving_average_2, 0), (self.blocks_streams_to_vector_0, 1))
         self.connect((self.blocks_moving_average_2_0, 0), (self.blocks_streams_to_vector_0, 2))
         self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_add_xx_0, 0))
-        self.connect((self.blocks_multiply_xx_0_0, 0), (self.blocks_add_xx_0, 1))
-        self.connect((self.blocks_multiply_xx_0_0_0, 0), (self.blocks_add_xx_0, 2))
+        self.connect((self.blocks_multiply_xx_1, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.blocks_multiply_xx_2, 0), (self.blocks_add_xx_0, 2))
         self.connect((self.blocks_short_to_float_0, 0), (self.blocks_threshold_ff_0, 0))
         self.connect((self.blocks_short_to_float_0, 0), (self.blocks_threshold_ff_0_0, 0))
         self.connect((self.blocks_short_to_float_0, 0), (self.blocks_threshold_ff_0_1, 0))
         self.connect((self.blocks_streams_to_vector_0, 0), (self.blocks_argmax_xx_0, 0))
-        self.connect((self.blocks_threshold_ff_0, 0), (self.blocks_threshold_ff_0_2, 0))
-        self.connect((self.blocks_threshold_ff_0_0, 0), (self.blocks_threshold_ff_0_2_0, 0))
-        self.connect((self.blocks_threshold_ff_0_1, 0), (self.blocks_threshold_ff_0_2_0_0, 0))
-        self.connect((self.blocks_threshold_ff_0_2, 0), (self.blocks_float_to_complex_1, 0))
-        self.connect((self.blocks_threshold_ff_0_2, 0), (self.qtgui_number_sink_0_0, 0))
-        self.connect((self.blocks_threshold_ff_0_2_0, 0), (self.blocks_float_to_complex_1_0, 0))
-        self.connect((self.blocks_threshold_ff_0_2_0, 0), (self.qtgui_number_sink_0_0_0, 0))
-        self.connect((self.blocks_threshold_ff_0_2_0_0, 0), (self.blocks_float_to_complex_1_1, 0))
-        self.connect((self.blocks_threshold_ff_0_2_0_0, 0), (self.qtgui_number_sink_0_0_0_0, 0))
+        self.connect((self.blocks_threshold_ff_0, 0), (self.blocks_add_const_vxx_0, 0))
+        self.connect((self.blocks_threshold_ff_0_0, 0), (self.blocks_add_const_vxx_0_0, 0))
+        self.connect((self.blocks_threshold_ff_0_1, 0), (self.blocks_add_const_vxx_0_0_0, 0))
         self.connect((self.blocks_udp_source_0, 0), (self.NOAA19_fall, 0))
+        self.connect((self.blocks_udp_source_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.blocks_udp_source_0, 0), (self.blocks_multiply_xx_0, 0))
-        self.connect((self.blocks_udp_source_0, 0), (self.rational_resampler_xxx_1, 0))
         self.connect((self.blocks_udp_source_0_1, 0), (self.NOAA18_fall, 0))
-        self.connect((self.blocks_udp_source_0_1, 0), (self.blocks_multiply_xx_0_0, 0))
-        self.connect((self.blocks_udp_source_0_1, 0), (self.rational_resampler_xxx_1_0, 0))
+        self.connect((self.blocks_udp_source_0_1, 0), (self.blocks_complex_to_mag_squared_0_0, 0))
+        self.connect((self.blocks_udp_source_0_1, 0), (self.blocks_multiply_xx_1, 0))
         self.connect((self.blocks_udp_source_0_2, 0), (self.NOAA15_fall, 0))
-        self.connect((self.blocks_udp_source_0_2, 0), (self.blocks_multiply_xx_0_0_0, 0))
-        self.connect((self.blocks_udp_source_0_2, 0), (self.rational_resampler_xxx_1_0_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_wavfile_sink_0, 0))
-        self.connect((self.rational_resampler_xxx_1, 0), (self.blocks_complex_to_mag_squared_0, 0))
-        self.connect((self.rational_resampler_xxx_1_0, 0), (self.blocks_complex_to_mag_squared_0_0, 0))
-        self.connect((self.rational_resampler_xxx_1_0_0, 0), (self.blocks_complex_to_mag_squared_0_1, 0))
+        self.connect((self.blocks_udp_source_0_2, 0), (self.blocks_complex_to_mag_squared_0_1, 0))
+        self.connect((self.blocks_udp_source_0_2, 0), (self.blocks_multiply_xx_2, 0))
+        self.connect((self.rational_resampler_xxx_0, 0), (self.blocks_udp_sink_0, 0))
 
 
     def closeEvent(self, event):

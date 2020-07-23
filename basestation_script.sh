@@ -29,6 +29,8 @@ else
 	cd ../
 fi
 
+rm -rf audio/*
+
 #enable alsa loopback
 sudo modprobe snd-aloop
 
@@ -60,5 +62,5 @@ for file in audio/*; do
 done
 echo $latest
 ./noaa-apt/noaa-apt $latest -o img/$cdate.png
-#rm -rf $latest
+rm -rf $latest
 done
