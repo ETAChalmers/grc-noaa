@@ -53,7 +53,7 @@ echo "init of inotify"
 inotifywait -m -q -e create -r --format "%:e %w%f" audio/ | while read file
 
 do
-cdate=$(date +"%Y-%m-%d-%H:%M")
+cdate=$(date +"%Y-%m-%d-%H:%M:%S")
 echo $cdate
 sleep 1
 unset -v latest
