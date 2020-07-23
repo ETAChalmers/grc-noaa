@@ -60,9 +60,9 @@ class top_block(gr.top_block):
         	1, samp_rate, bandwidth, 3e3, firdes.WIN_HAMMING, 6.76))
         self.low_pass_filter_0 = filter.fir_filter_ccf(dec, firdes.low_pass(
         	1, samp_rate, bandwidth, 3e3, firdes.WIN_HAMMING, 6.76))
-        self.blocks_udp_sink_0_0_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1232, 1472, True)
-        self.blocks_udp_sink_0_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1231, 1472, True)
-        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1230, 1472, True)
+        self.blocks_udp_sink_0_0_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1232, 3000, True)
+        self.blocks_udp_sink_0_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1231, 3000, True)
+        self.blocks_udp_sink_0 = blocks.udp_sink(gr.sizeof_gr_complex*1, '192.168.30.64', 1230, 3000, True)
         self.blocks_multiply_xx_0_1 = blocks.multiply_vcc(1)
         self.blocks_multiply_xx_0_0 = blocks.multiply_vcc(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
